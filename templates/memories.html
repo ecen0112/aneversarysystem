@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Memories{% endblock %}
+{% block content %}
+<h2>Memories</h2>
+<div class="row">
+    {% for memory in memories %}
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                {% if session.get('role') == 'admin' %}
+                <form method="post" action="{{ url_for('edit_memory', memory_id=memory.id) }}" class="mb-2">
+                    <textarea name="edited_memory" class="form-control mb-2" rows="2" required>{{ memory.content }}</textarea>
+                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                </form>
+                <form method="post" action="{{ url_for('delete_memory', memory_id=memory.id) }}" onsubmit="return confirm('Delete this memory?');">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+                {% else %}
+                {{ memory.content }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if session.get('role') == 'admin' %}
+<div class="mt-4">
+    <h4>Add a new memory</h4>
+    <form method="post">
+        <div class="mb-3">
+            <textarea class="form-control" name="memory" rows="2" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Memory</button>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

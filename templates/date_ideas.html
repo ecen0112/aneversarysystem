@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Date Ideas{% endblock %}
+{% block content %}
+<h2>Date Ideas</h2>
+<div class="row">
+    {% for idea in ideas %}
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                {% if session.get('role') == 'admin' %}
+                <form method="post" action="{{ url_for('edit_idea', idea_id=idea.id) }}" class="d-flex align-items-center mb-2">
+                    <input type="text" name="edited_idea" value="{{ idea.idea }}" class="form-control me-2" required>
+                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                </form>
+                <form method="post" action="{{ url_for('delete_idea', idea_id=idea.id) }}" onsubmit="return confirm('Delete this idea?');">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+                {% else %}
+                {{ idea.idea }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if session.get('role') == 'admin' %}
+<div class="mt-4">
+    <h4>Add a new date idea</h4>
+    <form method="post">
+        <div class="mb-3">
+            <input type="text" class="form-control" name="idea" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Idea</button>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

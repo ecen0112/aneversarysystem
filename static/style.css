@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500&display=swap');
+
+/* ====== Global ====== */
+body.bg-anniversary {
+    background: linear-gradient(120deg, #fff0f6 0%, #ffe4e1 100%);
+    min-height: 100vh;
+    font-family: 'Quicksand', 'Segoe UI', Arial, sans-serif;
+    color: #4b2e2e;
+    position: relative;
+    z-index: 1;
+}
+
+/* Soft floating hearts background */
+body.bg-anniversary::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><text x="10" y="50" font-size="40" fill="%23e25555">&#10084;</text></svg>');
+    background-repeat: repeat;
+    background-size: 100px 100px;
+    opacity: 0.05;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ====== Navbar ====== */
+.bg-romantic {
+    background: linear-gradient(90deg, #e25555 40%, #ff7f8c 80%, #ffb6b9 100%) !important;
+    box-shadow: 0 6px 20px rgba(226,85,85,0.25);
+    backdrop-filter: blur(6px);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    font-family: 'Dancing Script', cursive, 'Segoe UI', Arial, sans-serif;
+    color: #fff !important;
+    transition: transform 0.2s ease-in-out;
+}
+.navbar-brand:hover {
+    transform: scale(1.1);
+}
+
+/* ====== Cards ====== */
+.card, .gallery-card {
+    border: none;
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 6px 28px rgba(226,85,85,0.15);
+    transition: all 0.3s ease;
+    animation: fadeIn 0.7s;
+    backdrop-filter: blur(8px);
+}
+.card:hover, .gallery-card:hover {
+    transform: translateY(-6px) scale(1.04);
+    box-shadow: 0 10px 40px rgba(226,85,85,0.25);
+}
+
+/* ====== Buttons ====== */
+.btn-primary, .btn-success {
+    background: linear-gradient(90deg, #e25555, #ff7f8c, #ffb6b9);
+    border: none;
+    border-radius: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.25s ease-in-out;
+}
+.btn-primary:hover, .btn-success:hover {
+    background: linear-gradient(90deg, #ffb6b9, #ff7f8c, #e25555);
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background: linear-gradient(90deg, #e25555, #ff7f8c);
+    border: none;
+    border-radius: 2rem;
+    font-weight: 600;
+    transition: all 0.25s ease-in-out;
+}
+.btn-danger:hover {
+    background: linear-gradient(90deg, #ff7f8c, #e25555);
+    transform: scale(1.05);
+}
+
+.btn-light {
+    border-radius: 2rem;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+.btn-light:hover {
+    background: #ffe4e1;
+    color: #e25555;
+}
+
+/* ====== Inputs ====== */
+input, textarea, select {
+    border-radius: 1rem !important;
+    border: 1.5px solid #ff7f8c !important;
+    box-shadow: 0 2px 6px rgba(226,85,85,0.08);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus, textarea:focus, select:focus {
+    border-color: #e25555 !important;
+    box-shadow: 0 0 0 4px rgba(226,85,85,0.2);
+    outline: none;
+}
+
+/* ====== Typography ====== */
+h1, h2, h4 {
+    font-family: 'Dancing Script', cursive, 'Segoe UI', Arial, sans-serif;
+    color: #e25555;
+}
+.lead {
+    font-size: 1.25rem;
+    color: #e25555;
+}
+
+/* ====== Gallery Images ====== */
+img.rounded, .card-img-top {
+    border-radius: 1.5rem 1.5rem 0 0 !important;
+    box-shadow: 0 4px 20px rgba(226,85,85,0.12);
+    border: 3px solid #ffb6b9;
+    object-fit: cover;
+    height: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+img.rounded:hover, .card-img-top:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(226,85,85,0.25);
+}
+
+/* ====== Like button ====== */
+.heart {
+    color: #e25555;
+    font-size: 1.5rem;
+    transition: transform 0.3s, color 0.3s;
+}
+.like-btn.liked .heart {
+    color: #ff7f8c;
+    transform: scale(1.3) rotate(-10deg);
+}
+.like-btn.liked {
+    background: #ffe4e1;
+    border: 2px solid #e25555;
+    color: #e25555;
+    border-radius: 2rem;
+}
+
+/* ====== Animations ====== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+    .card, .gallery-card {
+        border-radius: 1rem;
+    }
+    img.rounded, .card-img-top {
+        border-radius: 1rem 1rem 0 0 !important;
+        height: 180px;
+    }
+}

@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}Home - Our Anniversary{% endblock %}
+{% block content %}
+<div class="hero-anniversary position-relative text-center py-5">
+    <!-- Floating animated hearts background -->
+    <div class="hearts-bg"></div>
+
+    <!-- Anniversary greeting -->
+    <h1 class="display-3 fw-bold text-romantic mb-3 animate__animated animate__fadeInDown">
+        Happy Anniversary, {{ profile.name }}! <span style="font-size:2.5rem;">&#10084;&#65039;</span>
+    </h1>
+
+    <!-- Subtitle with relationship start & duration -->
+    <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">
+        We’ve been together since <strong>{{ relationship_start }}</strong>
+    </p>
+    <p class="fs-5">{{ duration }}</p>
+    <p class="fs-5">{{ days_text }}</p>
+
+    <!-- Countdown Timer -->
+    <div id="countdown" class="fs-3 fw-bold text-romantic mb-4 animate__animated animate__fadeInUp animate__delay-2s">
+        <!-- Timer will be inserted here -->
+    </div>
+
+    <!-- Bio -->
+    <p class="mb-4 fs-5 fst-italic animate__animated animate__fadeInUp animate__delay-3s">
+        {{ profile.bio }}
+    </p>
+
+    <!-- Profile picture with rectangle frame (clickable to gallery) -->
+    <div class="animate__animated animate__zoomIn animate__delay-4s d-flex justify-content-center">
+        <div class="profile-frame shadow-lg">
+            {% if profile.profile_pic %}
+                <a href="{{ url_for('gallery') }}?pic={{ profile.profile_pic }}">
+                    <img src="{{ url_for('static', filename='profile_pics/' ~ profile.profile_pic) }}" 
+                         class="profile-pic" 
+                         alt="Profile Picture">
+                </a>
+            {% else %}
+                <a href="{{ url_for('gallery') }}">
+                    <img src="{{ url_for('static', filename='default_profile.jpg') }}" 
+                         class="profile-pic" 
+                         alt="Default Profile Picture">
+                </a>
+            {% endif %}
+            <div class="caption">Our Love Story ❤️ (Click me!)</div>
+        </div>
+    </div>
+
+    <!-- Buttons -->
+<!-- Buttons -->
+<div class="d-flex justify-content-center gap-3 mt-4 animate__animated animate__fadeInUp animate__delay-5s">
+    <a href="{{ url_for('memories') }}" class="btn btn-primary btn-lg rounded-pill px-4 shadow">
+        📖 View Memories
+    </a>
+    <a href="{{ url_for('gallery') }}" class="btn btn-success btn-lg rounded-pill px-4 shadow">
+        📷 Photo Gallery
+    </a>
+    <a href="{{ url_for('notes') }}" class="btn btn-primary btn-lg rounded-pill px-4 shadow">
+        📝 Notes
+    </a>
+</div>
+
+
+</div>
+
+<!-- Countdown Timer Script -->
+<script>
+    const anniversaryDate = new Date("{{ next_anniversary.strftime('%Y-%m-%d %H:%M:%S') }}").getTime();
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = anniversaryDate - now;
+
+        if (distance < 0) {
+            document.getElementById("countdown").innerHTML = "🎉 Happy Anniversary! 🎉";
+            clearInterval(timer);
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000*60*60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000*60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML =
+            `${days}d ${hours}h ${minutes}m ${seconds}s until our next anniversary ❤️`;
+    }
+
+    const timer = setInterval(updateCountdown, 1000);
+    updateCountdown();
+</script>
+
+<style>
+/* Rectangle Frame Styling */
+.profile-frame {
+    padding: 12px;
+    border: 5px solid #ff6b81;
+    border-radius: 25px;
+    background: linear-gradient(145deg, #fff0f5, #ffe6eb);
+    max-width: 350px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+/* Hover Effect */
+.profile-frame:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 107, 129, 0.7);
+}
+
+/* Picture inside the frame */
+.profile-pic {
+    width: 100%;
+    border-radius: 20px;
+    display: block;
+    cursor: pointer;
+}
+
+/* Caption under the picture */
+.caption {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ff4d6d;
+    font-family: 'Cursive', sans-serif;
+}
+</style>
+{% endblock %}

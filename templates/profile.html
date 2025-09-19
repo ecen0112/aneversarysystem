@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+                <h2>Edit Profile</h2>
+                {% if session.get('role') == 'admin' %}
+                <form method="post" enctype="multipart/form-data">
+                    <!-- Profile picture -->
+                    <div class="mb-3 text-center">
+                        {% if profile.profile_pic %}
+                            <img src="{{ url_for('static', filename='profile_pics/' ~ profile.profile_pic) }}" 
+                                 class="rounded mb-2" style="max-width:150px;">
+                            <button type="submit" name="delete_pic" value="1" 
+                                    class="btn btn-danger btn-sm mb-2"
+                                    onclick="return confirm('Delete profile picture?');">
+                                Delete Picture
+                            </button>
+                        {% else %}
+                            <img src="{{ url_for('static', filename='default_profile.jpg') }}" 
+                                 class="rounded mb-2" style="max-width:150px;">
+                        {% endif %}
+                        <input type="file" name="profile_pic" accept="image/*" class="form-control mt-2">
+                    </div>
+
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" value="{{ profile.name }}">
+                    </div>
+
+                    <!-- Relationship Start Date -->
+                    <div class="mb-3">
+                        <label class="form-label">Relationship Start Date</label>
+                        <input type="date" class="form-control" name="relationship_start" 
+                               value="{{ profile.relationship_start if profile.relationship_start else '' }}">
+                    </div>
+
+                    <!-- Bio -->
+                    <div class="mb-3">
+                        <label class="form-label">Bio</label>
+                        <textarea class="form-control" name="bio" rows="3">{{ profile.bio }}</textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Save</button>
+                </form>
+                {% else %}
+                    <!-- Read-only for normal users -->
+                    <div class="mb-3 text-center">
+                        {% if profile.profile_pic %}
+                            <img src="{{ url_for('static', filename='profile_pics/' ~ profile.profile_pic) }}" 
+                                 class="rounded mb-2" style="max-width:150px;">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='default_profile.jpg') }}" 
+                                 class="rounded mb-2" style="max-width:150px;">
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" value="{{ profile.name }}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Relationship Start Date</label>
+                        <input type="date" class="form-control" 
+                               value="{{ profile.relationship_start if profile.relationship_start else '' }}" 
+                               readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Bio</label>
+                        <textarea class="form-control" rows="3" readonly>{{ profile.bio }}</textarea>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
